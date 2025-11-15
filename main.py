@@ -1,3 +1,8 @@
+from env_manager import load_env
+
+# Load environment variables before any other imports that need them
+load_env()
+
 from src.agent import Agent
 
 agent_instance = Agent("https://iamdipanshus.in")

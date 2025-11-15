@@ -24,7 +24,7 @@ class Agent:
         _ = vector_store.add_documents(documents=all_splits)
 
         self.tools = [retrieve_context]
-        create_agent(self.tools)
+        self.agent = self.create_agent(self.tools)
 
     def create_agent(self, tools):
         prompt = "You have access to a tool that retrieves context the URL provided. Use the tool to help answer user queries."

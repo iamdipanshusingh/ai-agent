@@ -75,12 +75,20 @@ A powerful, context-aware AI agent built with LangChain and LangGraph that can a
 
 4. **Set up environment variables**
    
-   Create a `.env` file in the root directory:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key_here
+   Copy `.env.example` to `.env` and fill in all the required credentials:
+   ```bash
+   cp .env.example .env
    ```
    
-   > **Note**: Currently, model and embedding configurations are hardcoded but will be made configurable via environment variables in future updates.
+   Then edit `.env` and fill in all the required credentials:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key_here
+   CHAT_MODEL=gpt-4o-mini
+   ```
+   
+   > **Note**: 
+   > - Only OpenAI models are supported for `CHAT_MODEL` (e.g., `gpt-4o`, `gpt-4o-mini`, `gpt-3.5-turbo`). See [OpenAI Chat Models](https://platform.openai.com/docs/models) for available options.
+   > - `LANGSMITH_API_KEY` is optional but recommended for debugging and monitoring. Set `LANGSMITH_TRACING=false` to disable tracing.
 
 ## 📖 Usage
 
@@ -158,7 +166,8 @@ agent_instance.add_tools([custom_tool])
 ai-agent/
 ├── main.py                 # Entry point with interactive CLI
 ├── requirements.txt        # Python dependencies
-├── .env                    # Environment variables (create this)
+├── .env                    # Environment variables (copy from .env.example)
+├── .env.example            # Example environment variables template
 ├── .venv/                  # Virtual environment (gitignored)
 ├── README.md              # This file
 └── src/
@@ -174,21 +183,29 @@ ai-agent/
 
 ## 🔧 Configuration
 
-> **Upcoming Changes**: Model, embedding, and loader configurations will be made dynamic via environment variables in future updates. Currently, these values are hardcoded in the source files.
+### Model Configuration
 
-### Current Configuration (Hardcoded)
+The chat model is configured via the `CHAT_MODEL` environment variable in your `.env` file:
 
-**Model Configuration** (`src/model.py`):
-- Currently uses `gpt-5-nano` model
-- Will be configurable via environment variables soon
+```env
+CHAT_MODEL=gpt-4o-mini
+```
+
+> **Note**: Only OpenAI models are supported. For a list of available models, see [LangChain Chat Models Documentation](https://python.langchain.com/docs/integrations/chat/).
+
+### Embedding Configuration
 
 **Embedding Configuration** (`src/embeddings.py`):
 - Currently uses `text-embedding-3-large` embedding model
-- Will be configurable via environment variables soon
+- Will be configurable via environment variables in future updates
+
+### Loader Configuration
 
 **Loader Configuration** (`src/loaders.py`):
 - Currently supports web content loading via `WebBaseLoader`
 - Additional loaders (CSV, PDF, etc.) will be added in future updates
+
+### Chunking Configuration
 
 **Chunking Configuration** (`src/agent.py`):
 - Chunk size: 1000 characters
@@ -209,13 +226,13 @@ See `requirements.txt` for the complete list of dependencies.
 
 1. **Content Loading**: The agent loads content from the provided URL using `WebBaseLoader` (additional loaders will be added in future updates)
 2. **Text Splitting**: Content is split into chunks of 1000 characters with 200 character overlap
-3. **Embedding**: Chunks are converted to embeddings using OpenAI's `text-embedding-3-large` model
+3. **Embedding**: Chunks are converted to embeddings using OpenAI's `text-embedding-3-large` model (configurable via environment variables)
 4. **Indexing**: Embeddings are stored in an in-memory vector store
 5. **Query Processing**: When a user asks a question:
    - The query is converted to an embedding
    - Similar chunks are retrieved from the vector store
    - Relevant context is injected into the system prompt
-   - The LLM generates a response based only on the provided context
+   - The LLM (configured via `CHAT_MODEL` environment variable) generates a response based only on the provided context
 6. **Response Generation**: The agent streams responses in real-time
 
 ## 🎯 Use Cases

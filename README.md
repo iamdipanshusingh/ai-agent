@@ -245,13 +245,6 @@ See `requirements.txt` for the complete list of dependencies.
 
 ## 🛠️ Development
 
-### Running Tests
-
-```bash
-# Add your test commands here
-python -m pytest
-```
-
 ### Code Style
 
 This project follows PEP 8 style guidelines. Consider using:

@@ -3,6 +3,10 @@ from langchain.agents import AgentState, create_agent
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.messages import MessageLikeRepresentation
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.tools import tool
+
+from src import model
+from src.embeddings import vector_store, embeddings
 
 # Load and chunk contents of the blog
 loader = WebBaseLoader(

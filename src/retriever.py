@@ -8,10 +8,11 @@ from src.tools import retrieve_context
 
 
 class Agent:
-    """Creates an agent with a prompt, to answer queries"""
-    def __init__(self):
+    """Creates an agent with a prompt, to answer queries from the initial URL provided"""
+
+    def __init__(self, url):
         # Load and chunk contents of the blog
-        loader = web_loader("https://iamdipanshus.in")
+        loader = web_loader(url)
         docs = loader.load()
 
         text_splitter = RecursiveCharacterTextSplitter(
@@ -25,10 +26,10 @@ class Agent:
         tools = [retrieve_context]
         # If desired, specify custom instructions
         prompt = (
-            "You have access to a tool that retrieves context from a blog post. "
+            "You have access to a tool that retrieves context the URL provided."
             "Use the tool to help answer user queries."
         )
         self.agent = create_agent(model, tools, system_prompt=prompt)
-        
+
     def get_agent(self):
         return self.agent

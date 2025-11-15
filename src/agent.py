@@ -4,7 +4,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from src.model import model
 from src.embeddings import vector_store
 from src.loaders import web_loader
-from src.context.retrieve_context import retrieve_context_from_docs
+from src.middleware.retrieve_context import retrieve_context_from_docs
 
 
 class Agent:
@@ -29,7 +29,12 @@ class Agent:
     def create_agent(self, tools):
         prompt = "You have access to a tool that retrieves context the URL provided. Use the tool to help answer user queries."
         self.agent = create_agent(
-            model, tools, system_prompt=prompt, middleware=[retrieve_context_from_docs]
+            model,
+            tools,
+            system_prompt=prompt,
+            middleware=[
+                retrieve_context_from_docs,
+            ],
         )
         return self.agent
 

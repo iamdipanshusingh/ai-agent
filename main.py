@@ -1,4 +1,4 @@
-from agent import Agent
+from src.agent import Agent
 
 agent_instance = Agent("https://iamdipanshus.in")
 agent = agent_instance.agent

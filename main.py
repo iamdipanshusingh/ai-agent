@@ -1,14 +1,13 @@
-from env_manager import load_env
+from dotenv import load_dotenv
 
-# Load environment variables before any other imports that need them
-load_env()
+load_dotenv()
 
 from src.agent import Agent
 
 agent_instance = Agent("https://iamdipanshus.in")
 agent = agent_instance.agent
 
-query = input("Bot: hey, how may I help you?")
+query = input("Bot: hey, how may I help you?\n")
 
 for step in agent.stream(
     {"messages": [{"role": "user", "content": query}]}, stream_mode="values"

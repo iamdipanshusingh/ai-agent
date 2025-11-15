@@ -1,10 +1,10 @@
 from langchain.agents import create_agent
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from src import model
+from src.model import model
 from src.embeddings import vector_store
 from src.loaders import web_loader
-from src.tools import retrieve_context
+from src.tools.retrieve_context import retrieve_context
 
 
 class Agent:
@@ -36,4 +36,4 @@ class Agent:
 
     def add_tools(self, tools):
         self.tools += tools
-        return create_agent(self.tools)
+        return self.create_agent(self.tools)

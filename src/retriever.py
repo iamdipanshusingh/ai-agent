@@ -7,16 +7,10 @@ from langchain.tools import tool
 
 from src import model
 from src.embeddings import vector_store, embeddings
+from src.loaders import web_loader
 
 # Load and chunk contents of the blog
-loader = WebBaseLoader(
-    web_paths=("https://lilianweng.github.io/posts/2023-06-23-agent/",),
-    bs_kwargs=dict(
-        parse_only=bs4.SoupStrainer(
-            class_=("post-content", "post-title", "post-header")
-        )
-    ),
-)
+loader = web_loader("https://iamdipanshus.in")
 docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)

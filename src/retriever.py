@@ -23,13 +23,17 @@ class Agent:
         # Index chunks
         _ = vector_store.add_documents(documents=all_splits)
 
-        tools = [retrieve_context]
-        # If desired, specify custom instructions
-        prompt = (
-            "You have access to a tool that retrieves context the URL provided."
-            "Use the tool to help answer user queries."
-        )
+        self.tools = [retrieve_context]
+        create_agent(self.tools)
+
+    def create_agent(self, tools):
+        prompt = "You have access to a tool that retrieves context the URL provided. Use the tool to help answer user queries."
         self.agent = create_agent(model, tools, system_prompt=prompt)
+        return self.agent
 
     def get_agent(self):
         return self.agent
+
+    def add_tools(self, tools):
+        self.tools += tools
+        return create_agent(self.tools)

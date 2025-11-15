@@ -5,7 +5,7 @@ load_dotenv()
 from src.agent import Agent
 
 agent_instance = Agent("https://iamdipanshus.in")
-agent = agent_instance.agent
+agent = agent_instance.get_agent()
 
 query = input("Bot: hey, how may I help you?\n")
 
